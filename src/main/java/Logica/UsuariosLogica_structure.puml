@@ -1,0 +1,177 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": false,
+    "showMethodReturnType": true,
+    "showPackageLevels": 3,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "Logica.UsuariosLogica",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1068799386 { 
+   	label=modelo
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Usuario1068799386[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Usuario</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   contrasena: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nombreUsuario: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getContrasena(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNombreUsuario(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setContrasena(contrasena)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setId(id)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNombreUsuario(nombreUsuario)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_2013468445 { 
+   	label=Logica
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   UsuariosLogica2013468445[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UsuariosLogica</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   usuariosDAO: UsuariosDAO [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ UsuariosLogica()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ listarUsuarios(): Vector&lt;Usuario&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ registrarUsuario(usuario): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ validarCredenciales(usuario, contrasena): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_67442 { 
+   	label=DAO
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ConexionSQL67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConexionSQL</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ closeConnection(connection)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getConexion(): Connection</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+UsuariosDAO67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UsuariosDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ encontrarUsuario(usuario, contrasena): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertarUsuario(usuario): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ listarUsuarios(): Vector&lt;Usuario&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+UsuariosLogica2013468445 -> UsuariosDAO67442[label="usuariosDAO
+[0..1]"];
+    
+}
+@enduml

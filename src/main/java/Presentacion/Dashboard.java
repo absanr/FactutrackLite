@@ -1,8 +1,8 @@
 package Presentacion;
 
-
-import Presentacion.LoginForm;
-import Zimagenes.FondoPanel;
+import Util.FondoPanel;
+import java.net.URL;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -15,21 +15,27 @@ import Zimagenes.FondoPanel;
  */
 public class Dashboard extends javax.swing.JFrame {
     
-    
-    
-    private LoginForm v1; // Variable de tipo LogicForm
-    RegistrarFrame v3 = new RegistrarFrame();
-    PagosFrame v4 = new PagosFrame();
-    MedidorFrame v5 = new MedidorFrame();
-    DeudoresFrame v6 = new DeudoresFrame();
-    HistorialFrame v7 = new HistorialFrame();
-   
+    private LoginForm v1; // Referencia al LoginForm
+    private final RegistrarClienteFrame v3 = new RegistrarClienteFrame();
+    private final PagosFrame v4 = new PagosFrame();
+    private final MedidorFrame v5 = new MedidorFrame();
+    private final DeudoresFrame v6 = new DeudoresFrame();
+    private final HistorialFrame v7 = new HistorialFrame();
+
+    /**
+     * Constructor del Dashboard
+     */
     public Dashboard() {
-    // Usar el FondoPanel 
-    FondoPanel fondo = new FondoPanel("D:/ejemploInterfaz/src/main/java/Zimagenes/aguadash.jpg"); 
-    setContentPane(fondo);
+        try {
+            // Configurar fondo con una ruta relativa
+            FondoPanel fondo = new FondoPanel("/Zimagenes/aguadash.jpg");
+            setContentPane(fondo);
+        } catch (Exception e) {
+            System.err.println("Error al cargar el fondo del Dashboard: " + e.getMessage());
+        }
+
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); // Centrar ventana
     }
 
     /**
@@ -41,6 +47,7 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnBotonRegistrarV3 = new javax.swing.JButton();
@@ -51,186 +58,219 @@ public class Dashboard extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jLabel1.setText("FactuTrack");
 
-        btnRegresar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRegresar.setBackground(new java.awt.Color(255, 102, 102));
+        btnRegresar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegresar.setText("Cerrar sesión");
+        btnRegresar.setBorder(null);
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
             }
         });
 
-        btnBotonRegistrarV3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBotonRegistrarV3.setBackground(new java.awt.Color(0, 153, 204));
+        btnBotonRegistrarV3.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnBotonRegistrarV3.setForeground(new java.awt.Color(255, 255, 255));
         btnBotonRegistrarV3.setText("Registrar usuario");
+        btnBotonRegistrarV3.setBorder(null);
         btnBotonRegistrarV3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBotonRegistrarV3ActionPerformed(evt);
             }
         });
 
-        btnPagosV4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPagosV4.setBackground(new java.awt.Color(0, 153, 204));
+        btnPagosV4.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnPagosV4.setForeground(new java.awt.Color(255, 255, 255));
         btnPagosV4.setText("Realizar pagos");
+        btnPagosV4.setBorder(null);
         btnPagosV4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPagosV4ActionPerformed(evt);
             }
         });
 
-        btnMedidoresV5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMedidoresV5.setBackground(new java.awt.Color(0, 153, 204));
+        btnMedidoresV5.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnMedidoresV5.setForeground(new java.awt.Color(255, 255, 255));
         btnMedidoresV5.setText("Ingreso de consumo medidores");
+        btnMedidoresV5.setBorder(null);
         btnMedidoresV5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMedidoresV5ActionPerformed(evt);
             }
         });
 
-        btnDeudoresV6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnDeudoresV6.setBackground(new java.awt.Color(0, 153, 204));
+        btnDeudoresV6.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnDeudoresV6.setForeground(new java.awt.Color(255, 255, 255));
         btnDeudoresV6.setText("Visualizar deudores");
+        btnDeudoresV6.setBorder(null);
         btnDeudoresV6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeudoresV6ActionPerformed(evt);
             }
         });
 
-        btnHistorialV7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnHistorialV7.setBackground(new java.awt.Color(0, 153, 204));
+        btnHistorialV7.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        btnHistorialV7.setForeground(new java.awt.Color(255, 255, 255));
         btnHistorialV7.setText("Historial de consumo de usuario");
+        btnHistorialV7.setBorder(null);
         btnHistorialV7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHistorialV7ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnBotonRegistrarV3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnPagosV4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnMedidoresV5, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDeudoresV6, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnHistorialV7)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnBotonRegistrarV3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnPagosV4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnMedidoresV5, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnDeudoresV6, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnHistorialV7, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBotonRegistrarV3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPagosV4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMedidoresV5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeudoresV6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 326, Short.MAX_VALUE)
+                .addGap(316, 316, 316)
                 .addComponent(btnHistorialV7, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(18, 18, 18)
                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86))
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setV1(LoginForm v1) { // Metodo para setear la ventana V11111
-        this.v1 = v1;
+    /**
+     * Método para establecer la referencia al LoginForm
+     *
+     * @param v1 Referencia al LoginForm
+     */
+    public void setV1(LoginForm v1) {
+        if (v1 != null) {
+            this.v1 = v1;
+        } else {
+            System.err.println("Referencia a LoginForm es nula.");
+        }
+    }
+
+
+    /**
+     * Método para cambiar de ventana.
+     *
+     * @param frame Frame que se va a mostrar.
+     */
+    private void cambiarVentana(javax.swing.JFrame frame) {
+        try {
+            frame.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al abrir la ventana: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
+    
+    /**
+     * Acción del botón "Cerrar sesión"
+     */
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
-        v1.setVisible(true);
-        this.setVisible(false);
+        if (v1 != null) {
+            v1.limpiarCampos(); // Limpia los campos del LoginForm
+            v1.setVisible(true); // Mostrar LoginForm
+            this.setVisible(false); // Ocultar Dashboard
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: LoginForm no está configurado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    
+    /**
+     * Acción del botón "Registrar usuario"
+     */
     private void btnBotonRegistrarV3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBotonRegistrarV3ActionPerformed
-        // TODO add your handling code here:
-        v3.setV2(this); // Nos habre la ventana V3 registrar usuarios
-        v3.setVisible(true);
-        this.setVisible(false);
+        v3.setV2(this);
+        cambiarVentana(v3);
     }//GEN-LAST:event_btnBotonRegistrarV3ActionPerformed
 
+    /**
+     * Acción del botón "Realizar pagos"
+     */
     private void btnPagosV4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosV4ActionPerformed
-        // TODO add your handling code here:
-        v4.setV2(this); // Nos habre la ventana V4 o registrar pagos
-        v4.setVisible(true);
-        this.setVisible(false);
+        v4.setV2(this);
+        cambiarVentana(v4);
     }//GEN-LAST:event_btnPagosV4ActionPerformed
 
-    
+    /**
+     * Acción del botón "Visualizar deudores"
+     */
     private void btnDeudoresV6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeudoresV6ActionPerformed
-        // TODO add your handling code here:
-        v6.setV2(this); // Nos habre la ventana V6 o registrar pagos
-        v6.setVisible(true);
-        this.setVisible(false);
+        v6.setV2(this);
+        cambiarVentana(v6);
     }//GEN-LAST:event_btnDeudoresV6ActionPerformed
 
+    /**
+     * Acción del botón "Ingreso de consumo medidores"
+     */
     private void btnMedidoresV5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMedidoresV5ActionPerformed
-        // TODO add your handling code here:
-        v5.setV2(this); // Nos habre la ventana V7 o registrar pagos
-        v5.setVisible(true);
-        this.setVisible(false);
+        v5.setV2(this);
+        cambiarVentana(v5);
     }//GEN-LAST:event_btnMedidoresV5ActionPerformed
 
+    /**
+     * Acción del botón "Historial de consumo de usuario"
+     */
     private void btnHistorialV7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialV7ActionPerformed
-        // TODO add your handling code here:
-        v7.setV2(this); // Nos habre la ventana V7 o registrar pagos
-        v7.setVisible(true);
-        this.setVisible(false);
+        v7.setV2(this);
+        cambiarVentana(v7);
     }//GEN-LAST:event_btnHistorialV7ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Dashboard().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBotonRegistrarV3;
@@ -240,5 +280,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnPagosV4;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

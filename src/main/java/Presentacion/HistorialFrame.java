@@ -4,16 +4,43 @@
  */
 package Presentacion;
 
+import Logica.ClienteLogica;
+import Logica.ConsumoLogica;
+import Logica.FacturaLogica;
+import modelo.Cliente;
+import modelo.Consumo;
+import modelo.Factura;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 /**
  *
  * @author DERICK ALEXIS
  */
 public class HistorialFrame extends javax.swing.JFrame {
 
-     private Dashboard v2;
+    private Dashboard v2;
+
     public HistorialFrame() {
         initComponents();
         this.setLocationRelativeTo(this);
+        configurarEncabezadosTabla(); // Configurar encabezados
+        cargarHistorialCompleto(); // Cargar todo el historial por defecto
+    }
+
+    public void setV2(Dashboard v2) {
+        this.v2 = v2;
+    }
+
+    /**
+     * Configura los encabezados de la tabla.
+     */
+    private void configurarEncabezadosTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable_historial.getModel();
+        modelo.setColumnIdentifiers(new String[]{
+                "Nombre Cliente", "Fecha Consumo", "Consumo (m³)", "Monto Factura (S/)", "Estado Pago", "Fecha Vencimiento", "Status"
+        });
     }
 
     /**
@@ -28,11 +55,11 @@ public class HistorialFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jTextField_buscar_id_dni = new javax.swing.JTextField();
+        jButton_buscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        jTable_historial = new javax.swing.JTable();
+        jButton_atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,16 +72,15 @@ public class HistorialFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Buscar por idusuario o DNI:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jButton_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton_buscar.setText("Buscar");
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jButton_buscarActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Buscar");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_historial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,13 +91,13 @@ public class HistorialFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable_historial);
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Atras");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_atras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton_atras.setText("Atras");
+        jButton_atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton_atrasActionPerformed(evt);
             }
         });
 
@@ -83,9 +109,9 @@ public class HistorialFrame extends javax.swing.JFrame {
                 .addGap(84, 84, 84)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_buscar_id_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(89, 89, 89))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
@@ -96,7 +122,7 @@ public class HistorialFrame extends javax.swing.JFrame {
             .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
@@ -111,73 +137,129 @@ public class HistorialFrame extends javax.swing.JFrame {
                         .addComponent(jLabel8)))
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField_buscar_id_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jButton_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void setV2(Dashboard v2){
-        this.v2 = v2;
-    }
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    
+    /**
+     * Carga todo el historial de todos los clientes al iniciar.
+     */
+    private void cargarHistorialCompleto() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable_historial.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ClienteLogica clienteLogica = new ClienteLogica();
+        ConsumoLogica consumoLogica = new ConsumoLogica();
+        FacturaLogica facturaLogica = new FacturaLogica();
+
+        List<Cliente> clientes = clienteLogica.obtenerClientes();
+
+        for (Cliente cliente : clientes) {
+            int idUsuario = cliente.getIdUsuario();
+            List<Consumo> consumos = consumoLogica.obtenerConsumosPorUsuario(idUsuario);
+            List<Factura> facturas = facturaLogica.obtenerFacturasPorUsuario(idUsuario);
+
+            for (int i = 0; i < consumos.size(); i++) {
+                Consumo consumo = consumos.get(i);
+                Factura factura = facturas.get(i); // Se asume una factura por cada consumo
+
+                modelo.addRow(new Object[]{
+                        cliente.getNombre(),
+                        consumo.getMes(),
+                        consumo.getConsumoMensual(),
+                        factura.getMonto(),
+                        factura.getEstadoPago(),
+                        factura.getFechaVencimiento(),
+                        factura.getStatus()
+                });
+            }
+        }
+    }
+
+    /**
+     * Carga el historial de un cliente específico.
+     *
+     * @param idUsuario ID del usuario.
+     */
+    private void cargarHistorialPorCliente(int idUsuario) {
+        DefaultTableModel modelo = (DefaultTableModel) jTable_historial.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        ClienteLogica clienteLogica = new ClienteLogica();
+        ConsumoLogica consumoLogica = new ConsumoLogica();
+        FacturaLogica facturaLogica = new FacturaLogica();
+
+        Cliente cliente = clienteLogica.obtenerClientePorId(idUsuario);
+        if (cliente != null) {
+            List<Consumo> consumos = consumoLogica.obtenerConsumosPorUsuario(idUsuario);
+            List<Factura> facturas = facturaLogica.obtenerFacturasPorUsuario(idUsuario);
+
+            for (int i = 0; i < consumos.size(); i++) {
+                Consumo consumo = consumos.get(i);
+                Factura factura = facturas.get(i); // Se asume una factura por cada consumo
+
+                modelo.addRow(new Object[]{
+                        cliente.getNombre(),
+                        consumo.getMes(),
+                        consumo.getConsumoMensual(),
+                        factura.getMonto(),
+                        factura.getEstadoPago(),
+                        factura.getFechaVencimiento(),
+                        factura.getStatus()
+                });
+            }
+        }
+    }
+    
+    private void jButton_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atrasActionPerformed
         // TODO add your handling code here:
         v2.setVisible(true); // Nos regresa atras a la pantalla V2
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton_atrasActionPerformed
+
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        String idODni = jTextField_buscar_id_dni.getText().trim();
+
+        if (idODni.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID o DNI para buscar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            cargarHistorialCompleto(); // Cargar todo si no hay búsqueda
+            return;
+        }
+
+        ClienteLogica clienteLogica = new ClienteLogica();
+        int idUsuario = clienteLogica.obtenerIdUsuarioPorDniOId(idODni);
+
+        if (idUsuario == -1) {
+            JOptionPane.showMessageDialog(this, "No se encontró un usuario con el ID o DNI proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            DefaultTableModel modelo = (DefaultTableModel) jTable_historial.getModel();
+            modelo.setRowCount(0); // Limpiar tabla
+        } else {
+            cargarHistorialPorCliente(idUsuario);
+        }
+    }//GEN-LAST:event_jButton_buscarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HistorialFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HistorialFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HistorialFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HistorialFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HistorialFrame().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton_atras;
+    private javax.swing.JButton jButton_buscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTable_historial;
+    private javax.swing.JTextField jTextField_buscar_id_dni;
     // End of variables declaration//GEN-END:variables
 }

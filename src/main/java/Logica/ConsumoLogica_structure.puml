@@ -1,0 +1,181 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": false,
+    "showMethodReturnType": true,
+    "showPackageLevels": 3,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "Logica.ConsumoLogica",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1068799386 { 
+   	label=modelo
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Consumo1068799386[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Consumo</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   consumoMensual: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idConsumo: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idUsuario: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mes: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getConsumoMensual(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdConsumo(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdUsuario(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMes(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setConsumoMensual(consumoMensual)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdConsumo(idConsumo)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdUsuario(idUsuario)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMes(mes)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_2013468445 { 
+   	label=Logica
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ConsumoLogica2013468445[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConsumoLogica</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   consumoDAO: ConsumoDAO [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ ConsumoLogica()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eliminarConsumo(idConsumo): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerConsumosPorUsuario(idUsuario): List&lt;Consumo&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ registrarConsumo(consumo): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_67442 { 
+   	label=DAO
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ConexionSQL67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConexionSQL</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ closeConnection(connection)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getConexion(): Connection</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ConsumoDAO67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConsumoDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ eliminarConsumo(idConsumo): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertarConsumo(consumo): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerConsumosPorUsuario(idUsuario): List&lt;Consumo&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+ConsumoLogica2013468445 -> Consumo1068799386[label="registrarConsumo() -> getConsumoMensual()"];
+ConsumoLogica2013468445 -> ConsumoDAO67442[label="consumoDAO
+[0..1]"];
+    
+}
+@enduml

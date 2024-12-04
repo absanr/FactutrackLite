@@ -1,0 +1,197 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": false,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": false,
+    "cutConstructors": false
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": false,
+    "showMethodReturnType": true,
+    "showPackageLevels": 3,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "Logica.FacturaLogica",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1068799386 { 
+   	label=modelo
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Factura1068799386[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Factura</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   estadoPago: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fechaEmision: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fechaVencimiento: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idFactura: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idUsuario: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   monto: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   status: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getEstadoPago(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFechaEmision(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFechaVencimiento(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdFactura(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdUsuario(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMonto(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStatus(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setEstadoPago(estadoPago)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFechaEmision(fechaEmision)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFechaVencimiento(fechaVencimiento)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdFactura(idFactura)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdUsuario(idUsuario)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMonto(monto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStatus(status)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_2013468445 { 
+   	label=Logica
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   FacturaLogica2013468445[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FacturaLogica</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   facturaDAO: FacturaDAO [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ FacturaLogica()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ actualizarEstadoPagoParcial(idFactura, montoPagado): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelarFactura(idFactura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generarFactura(factura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPendientesPorUsuario(idUsuario): List&lt;Factura&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPorUsuario(idUsuario): List&lt;Factura&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ pagarFactura(idFactura): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_67442 { 
+   	label=DAO
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ConexionSQL67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConexionSQL</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ closeConnection(connection)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getConexion(): Connection</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+FacturaDAO67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FacturaDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ actualizarEstadoFactura(idFactura, estado): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ actualizarPagoParcial(idFactura, montoPagado): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelarFactura(idFactura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertarFactura(factura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturaPorId(idFactura): Factura</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPorEstadoYUsuario(idUsuario, estado): List&lt;Factura&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPorUsuario(idUsuario): List&lt;Factura&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+FacturaLogica2013468445 -> Factura1068799386[label="generarFactura() -> getMonto()"];
+FacturaLogica2013468445 -> FacturaDAO67442[label="facturaDAO
+[0..1]"];
+    
+}
+@enduml

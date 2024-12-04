@@ -4,46 +4,50 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author DERICK ALEXIS
+ */
 
 public class ConexionSQL {
+    // Datos de conexión
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3306/bdprueba2?characterEncoding=utf8";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
 
-    // Declaramos la conexion a mysql
-    public static Connection con;
-
-    // Declaramos los datos de conexion a la bd
-    private static final String driver = "com.mysql.cj.jdbc.Driver"; // Ajuste para MySQL Connector/J 8.0+
-    private static final String user = "root";
-    private static final String pass = "";
-    private static final String url = "jdbc:mysql://localhost:3306/bdprueba2?characterEncoding=utf8";
-
-    // Funcion que va conectarse a mi bd de mysql
+    /**
+     * Obtiene una nueva conexión a la base de datos.
+     *
+     * @return Una conexión válida a la base de datos.
+     */
     public static Connection getConexion() {
-        con = null;
         try {
-            // Cargar el driver
-            Class.forName(driver);
-            // Establecer la conexión
-            con = DriverManager.getConnection(url, user, pass);
-            if (con != null) {
-                System.out.println("Conexion establecida");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error de conexión: " + e.toString());
+            Class.forName(DRIVER); // Cargar el driver
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar el driver: " + e.toString());
+            System.err.println("Error al cargar el driver: " + e.getMessage());
+            throw new RuntimeException("Error al cargar el driver", e);
+        } catch (SQLException e) {
+            System.err.println("Error de conexión: " + e.getMessage());
+            throw new RuntimeException("Error de conexión a la base de datos", e);
         }
-        return con;
     }
 
-    // Funcion para cerrar la conexion a la bd
-    public static void closeConnection() {
-        try {
-            if (con != null && !con.isClosed()) {
-                con.close();
+    /**
+     * Cierra la conexión proporcionada.
+     *
+     * @param connection La conexión que se desea cerrar.
+     */
+    public static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+                System.out.println("Conexión cerrada");
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexión: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }

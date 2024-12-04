@@ -1,0 +1,299 @@
+@startuml
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1068799386 { 
+   	label=modelo
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Cliente1068799386[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Cliente</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   direccion: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dni: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   estadoServicio: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fechaInstalacion: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idUsuario: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nombre: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   telefono: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   tieneMedidor: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getDireccion(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getDni(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getEstadoServicio(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFechaInstalacion(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdUsuario(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNombre(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTelefono(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getTieneMedidor(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setDireccion(direccion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setDni(dni)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setEstadoServicio(estadoServicio)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFechaInstalacion(fechaInstalacion)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdUsuario(idUsuario)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNombre(nombre)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setTelefono(telefono)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setTieneMedidor(tieneMedidor)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Consumo1068799386[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Consumo</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   consumoMensual: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idConsumo: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idUsuario: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   mes: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getConsumoMensual(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdConsumo(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdUsuario(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMes(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setConsumoMensual(consumoMensual)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdConsumo(idConsumo)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdUsuario(idUsuario)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMes(mes)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+Factura1068799386[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Factura</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   estadoPago: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fechaEmision: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   fechaVencimiento: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idFactura: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   idUsuario: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   monto: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   status: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getEstadoPago(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFechaEmision(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFechaVencimiento(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdFactura(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getIdUsuario(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getMonto(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStatus(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setEstadoPago(estadoPago)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFechaEmision(fechaEmision)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setFechaVencimiento(fechaVencimiento)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdFactura(idFactura)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setIdUsuario(idUsuario)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setMonto(monto)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setStatus(status)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+Usuario1068799386[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Usuario</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   contrasena: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nombreUsuario: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getContrasena(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getId(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNombreUsuario(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setContrasena(contrasena)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setId(id)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setNombreUsuario(nombreUsuario)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_2013468445 { 
+   	label=Logica
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ClienteLogica2013468445[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ClienteLogica</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   clienteDAO: ClienteDAO [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ ClienteLogica()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ actualizarCliente(cliente): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ agregarCliente(cliente): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eliminarCliente(idCliente): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerClientePorDniOId(idODni): Cliente</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerClientePorId(idUsuario): Cliente</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerClientes(): List&lt;Cliente&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerIdUsuarioPorDniOId(idODni): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+ConsumoLogica2013468445[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConsumoLogica</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   consumoDAO: ConsumoDAO [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ ConsumoLogica()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eliminarConsumo(idConsumo): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerConsumosPorUsuario(idUsuario): List&lt;Consumo&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ registrarConsumo(consumo): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+FacturaLogica2013468445[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FacturaLogica</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   facturaDAO: FacturaDAO [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ FacturaLogica()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ actualizarEstadoPagoParcial(idFactura, montoPagado): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelarFactura(idFactura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ generarFactura(factura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPendientesPorUsuario(idUsuario): List&lt;Factura&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPorUsuario(idUsuario): List&lt;Factura&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ pagarFactura(idFactura): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+UsuariosLogica2013468445[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UsuariosLogica</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   usuariosDAO: UsuariosDAO [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ UsuariosLogica()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ listarUsuarios(): Vector&lt;Usuario&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ registrarUsuario(usuario): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ validarCredenciales(usuario, contrasena): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+subgraph cluster_67442 { 
+   	label=DAO
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   ClienteDAO67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ClienteDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ actualizarCliente(cliente): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ eliminarCliente(idCliente): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertarCliente(cliente): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerClientePorDniOId(idODni): Cliente</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerClientePorId(idUsuario): Cliente</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerIdPorDniOId(idODni): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerTodosLosClientes(): List&lt;Cliente&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ConsumoDAO67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConsumoDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ eliminarConsumo(idConsumo): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertarConsumo(consumo): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerConsumosPorUsuario(idUsuario): List&lt;Consumo&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+ConexionSQL67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)ConexionSQL</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ closeConnection(connection)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getConexion(): Connection</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+FacturaDAO67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)FacturaDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ actualizarEstadoFactura(idFactura, estado): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ actualizarPagoParcial(idFactura, montoPagado): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelarFactura(idFactura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertarFactura(factura): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturaPorId(idFactura): Factura</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPorEstadoYUsuario(idUsuario, estado): List&lt;Factura&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ obtenerFacturasPorUsuario(idUsuario): List&lt;Factura&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+UsuariosDAO67442[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)UsuariosDAO</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ encontrarUsuario(usuario, contrasena): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertarUsuario(usuario): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ listarUsuarios(): Vector&lt;Usuario&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+ClienteLogica2013468445 -> ClienteDAO67442[label="clienteDAO
+[0..1]"];
+ConsumoLogica2013468445 -> Consumo1068799386[label="registrarConsumo() -> getConsumoMensual()"];
+ConsumoLogica2013468445 -> ConsumoDAO67442[label="consumoDAO
+[0..1]"];
+FacturaLogica2013468445 -> Factura1068799386[label="generarFactura() -> getMonto()"];
+FacturaLogica2013468445 -> FacturaDAO67442[label="facturaDAO
+[0..1]"];
+UsuariosLogica2013468445 -> UsuariosDAO67442[label="usuariosDAO
+[0..1]"];
+}
+@enduml

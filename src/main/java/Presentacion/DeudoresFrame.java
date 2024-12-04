@@ -4,17 +4,37 @@
  */
 package Presentacion;
 
+import Logica.ClienteLogica;
+import Logica.FacturaLogica;
+import modelo.Cliente;
+import modelo.Factura;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 /**
  *
  * @author DERICK ALEXIS
  */
 public class DeudoresFrame extends javax.swing.JFrame {
 
-    
-    private Dashboard v2;
+    private Dashboard v2; // Referencia al Dashboard
+
     public DeudoresFrame() {
         initComponents();
-        this.setLocationRelativeTo(this);
+        inicializarTabla(); // Configurar encabezados de tabla
+        this.setLocationRelativeTo(this); // Centrar la ventana
+        cargarDeudores(); // Cargar deudores al inicio
+    }
+
+    /**
+     * Configura los encabezados de la tabla.
+     */
+    private void inicializarTabla() {
+        DefaultTableModel modelo = new DefaultTableModel(
+            new String[]{"ID Usuario", "DNI", "Nombre", "Monto Pendiente", "Estado Servicio"}, 0
+        );
+        jTable_deudores.setModel(modelo);
     }
 
     /**
@@ -26,17 +46,19 @@ public class DeudoresFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_deudores = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton_optionActivo = new javax.swing.JRadioButton();
+        jRadioButton_optionSuspendido = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jTextField_buscar_id_dni = new javax.swing.JTextField();
+        jButton_buscar = new javax.swing.JButton();
+        jButton_atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,7 +69,7 @@ public class DeudoresFrame extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setText("Lista de deudores");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_deudores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -58,35 +80,39 @@ public class DeudoresFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable_deudores);
 
         jLabel3.setText("Modificar estado de servicio:");
 
-        jRadioButton1.setText("Activo");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton_optionActivo.setText("Activo");
+        jRadioButton_optionActivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jRadioButton_optionActivoActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Suspender");
+        jRadioButton_optionSuspendido.setText("Suspender");
+        jRadioButton_optionSuspendido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton_optionSuspendidoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Buscar por idusuario o DNI:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jButton_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton_buscar.setText("Buscar");
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jButton_buscarActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Buscar");
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Atras");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_atras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton_atras.setText("Atras");
+        jButton_atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton_atrasActionPerformed(evt);
             }
         });
 
@@ -106,116 +132,189 @@ public class DeudoresFrame extends javax.swing.JFrame {
                         .addGap(62, 62, 62)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1))
+                        .addComponent(jTextField_buscar_id_dni))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67)
-                        .addComponent(jRadioButton1)
+                        .addComponent(jRadioButton_optionActivo)
                         .addGap(74, 74, 74)
-                        .addComponent(jRadioButton2)))
+                        .addComponent(jRadioButton_optionSuspendido)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(70, 70, 70)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2))
-                                .addGap(0, 14, Short.MAX_VALUE))
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18))
+                        .addComponent(jButton_buscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabel8))
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jTextField_buscar_id_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jRadioButton_optionActivo)
+                            .addComponent(jRadioButton_optionSuspendido))
+                        .addGap(0, 14, Short.MAX_VALUE))
+                    .addComponent(jButton_atras, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void setV2(Dashboard v2){
+    
+    /**
+     * Carga los datos de los deudores en la tabla.
+     */
+    private void cargarDeudores() {
+        DefaultTableModel modelo = (DefaultTableModel) jTable_deudores.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        ClienteLogica clienteLogica = new ClienteLogica();
+        FacturaLogica facturaLogica = new FacturaLogica();
+
+        List<Cliente> clientes = clienteLogica.obtenerClientes();
+
+        for (Cliente cliente : clientes) {
+            List<Factura> facturasPendientes = facturaLogica.obtenerFacturasPendientesPorUsuario(cliente.getIdUsuario());
+
+            if (!facturasPendientes.isEmpty()) {
+                double montoPendiente = facturasPendientes.stream()
+                    .mapToDouble(Factura::getMonto)
+                    .sum();
+
+                modelo.addRow(new Object[]{
+                    cliente.getIdUsuario(),
+                    cliente.getDni(),
+                    cliente.getNombre(),
+                    montoPendiente,
+                    cliente.getEstadoServicio()
+                });
+            }
+        }
+    }
+
+    public void setV2(Dashboard v2) {
         this.v2 = v2;
     }
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    /**
+     * Modifica el estado de servicio de un cliente seleccionado.
+     */
+    private void modificarEstadoServicio() {
+        int filaSeleccionada = jTable_deudores.getSelectedRow();
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un cliente de la tabla.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idUsuario = (int) jTable_deudores.getValueAt(filaSeleccionada, 0);
+        String nuevoEstado = jRadioButton_optionActivo.isSelected() ? "Activo" : "Suspendido";
+
+        ClienteLogica clienteLogica = new ClienteLogica();
+        Cliente cliente = clienteLogica.obtenerClientePorId(idUsuario);
+        cliente.setEstadoServicio(nuevoEstado);
+
+        if (clienteLogica.actualizarCliente(cliente)) {
+            JOptionPane.showMessageDialog(this, "Estado de servicio actualizado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            cargarDeudores(); // Recargar tabla
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el estado de servicio.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Realiza la búsqueda de un cliente por ID o DNI.
+     */
+    private void buscarCliente() {
+        String idODni = jTextField_buscar_id_dni.getText().trim();
+
+        if (idODni.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID o DNI para buscar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        ClienteLogica clienteLogica = new ClienteLogica();
+        Cliente cliente = clienteLogica.obtenerClientePorDniOId(idODni);
+
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró un usuario con el ID o DNI proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            DefaultTableModel modelo = (DefaultTableModel) jTable_deudores.getModel();
+            modelo.setRowCount(0);
+
+            FacturaLogica facturaLogica = new FacturaLogica();
+            List<Factura> facturasPendientes = facturaLogica.obtenerFacturasPendientesPorUsuario(cliente.getIdUsuario());
+
+            if (!facturasPendientes.isEmpty()) {
+                double montoPendiente = facturasPendientes.stream()
+                    .mapToDouble(Factura::getMonto)
+                    .sum();
+
+                modelo.addRow(new Object[]{
+                    cliente.getIdUsuario(),
+                    cliente.getDni(),
+                    cliente.getNombre(),
+                    montoPendiente,
+                    cliente.getEstadoServicio()
+                });
+            }
+        }
+    }
+    private void jRadioButton_optionActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_optionActivoActionPerformed
+        // TODO add your handling code here:
+        modificarEstadoServicio();
+    }//GEN-LAST:event_jRadioButton_optionActivoActionPerformed
+
+    private void jButton_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atrasActionPerformed
         // TODO add your handling code here:
         v2.setVisible(true); // Nos regresa atras a la pantalla V2
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton_atrasActionPerformed
+
+    private void jRadioButton_optionSuspendidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_optionSuspendidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton_optionSuspendidoActionPerformed
+
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        buscarCliente();
+    }//GEN-LAST:event_jButton_buscarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DeudoresFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DeudoresFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DeudoresFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DeudoresFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DeudoresFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton_atras;
+    private javax.swing.JButton jButton_buscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton_optionActivo;
+    private javax.swing.JRadioButton jRadioButton_optionSuspendido;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTable_deudores;
+    private javax.swing.JTextField jTextField_buscar_id_dni;
     // End of variables declaration//GEN-END:variables
 }

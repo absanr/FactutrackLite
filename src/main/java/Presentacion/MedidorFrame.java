@@ -4,17 +4,40 @@
  */
 package Presentacion;
 
+import Logica.ClienteLogica;
+import Logica.ConsumoLogica;
+import Logica.FacturaLogica;
+import modelo.Consumo;
+import modelo.Factura;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 /**
  *
  * @author DERICK ALEXIS
  */
 public class MedidorFrame extends javax.swing.JFrame {
 
-    private Dashboard v2;
+    private Dashboard v2; // Referencia al Dashboard
     public MedidorFrame() {
         initComponents();
+        inicializarTabla(); // Inicializar la tabla con encabezados
         this.setLocationRelativeTo(this);
     }
+    
+    /**
+    * Método para inicializar la tabla con los encabezados correctos.
+    */
+   private void inicializarTabla() {
+       DefaultTableModel modelo = new DefaultTableModel(
+           new String[]{"Fecha Consumo", "Consumo Mensual (m³)", "Monto Factura ($)", "Estado Pago"}, 0
+       );
+       jTable_consumo_factura_medidor.setModel(modelo);
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,15 +55,18 @@ public class MedidorFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField_buscar_id_dni = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButton_buscar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jTextField_consumo_mes = new javax.swing.JTextField();
+        jButton_registrar_consumo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        jTable_consumo_factura_medidor = new javax.swing.JTable();
+        jButton_atras = new javax.swing.JButton();
+        jDateChooser_fecha_consumo = new com.toedter.calendar.JDateChooser();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel_resultado_nombreCliente = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,21 +79,25 @@ public class MedidorFrame extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setText("Ingreso consumo medidores");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Buscar");
-
-        jLabel3.setText("Ingresar consumo del mes (metro cubico) :");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_buscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton_buscar.setText("Buscar");
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jButton_buscarActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Ingresar consumo");
+        jLabel3.setText("Ingresar consumo del mes (metro cubico) :");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jButton_registrar_consumo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton_registrar_consumo.setText("Ingresar consumo");
+        jButton_registrar_consumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_registrar_consumoActionPerformed(evt);
+            }
+        });
+
+        jTable_consumo_factura_medidor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -78,15 +108,19 @@ public class MedidorFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable_consumo_factura_medidor);
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("Atras");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton_atras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton_atras.setText("Atras");
+        jButton_atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton_atrasActionPerformed(evt);
             }
         });
+
+        jLabel4.setText("Escriba la fecha del consumo (opcional)");
+
+        jLabel_resultado_nombreCliente.setText("jLabel5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,52 +129,64 @@ public class MedidorFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                            .addComponent(jTextField2))
-                        .addGap(37, 37, 37)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addGap(110, 110, 110)
-                        .addComponent(jLabel8)))
+                        .addComponent(jLabel8))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField_buscar_id_dni, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(jTextField_consumo_mes))
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton_buscar)
+                                    .addComponent(jButton_registrar_consumo)))
+                            .addComponent(jDateChooser_fecha_consumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_resultado_nombreCliente))))
                 .addContainerGap(57, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabel8)))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel8)))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField_buscar_id_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel_resultado_nombreCliente)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextField_consumo_mes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton_registrar_consumo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)
+                        .addComponent(jDateChooser_fecha_consumo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jButton_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -148,62 +194,183 @@ public class MedidorFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    /**
+     * Calcula el monto de la factura basado en el consumo.
+     * @param consumoMensual Consumo en metros cúbicos.
+     * @return Monto total de la factura.
+     */
+    private double calcularMontoFactura(double consumoMensual) {
+        double tarifa = 1.5; // Ejemplo: tarifa por metro cúbico
+        return consumoMensual * tarifa;
+    }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    /**
+     * Genera una fecha de vencimiento (+30 días desde la emisión).
+     * @param fechaEmision Fecha de emisión en formato "yyyy-MM-dd".
+     * @return Fecha de vencimiento en formato "yyyy-MM-dd".
+     */
+    private String generarFechaVencimiento(String fechaEmision) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date fecha = sdf.parse(fechaEmision);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fecha);
+            calendar.add(Calendar.DAY_OF_MONTH, 30);
+            return sdf.format(calendar.getTime());
+        } catch (Exception e) {
+            return null; // En caso de error
+        }
+    }
+
+    /**
+     * Carga los datos de consumo y factura en la tabla para un usuario.
+     * @param idUsuario ID del usuario.
+     */
+    private void cargarDatosTabla(int idUsuario) {
+        DefaultTableModel modelo = (DefaultTableModel) jTable_consumo_factura_medidor.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        ConsumoLogica consumoLogica = new ConsumoLogica();
+        List<Consumo> consumos = consumoLogica.obtenerConsumosPorUsuario(idUsuario);
+
+        FacturaLogica facturaLogica = new FacturaLogica();
+        List<Factura> facturas = facturaLogica.obtenerFacturasPorUsuario(idUsuario);
+
+        for (int i = 0; i < consumos.size(); i++) {
+            Consumo consumo = consumos.get(i);
+            Factura factura = facturas.get(i); // Se asume 1 consumo => 1 factura
+
+            modelo.addRow(new Object[]{
+                    consumo.getMes(),
+                    consumo.getConsumoMensual(),
+                    factura.getMonto(),
+                    factura.getEstadoPago()
+            });
+        }
+    }
+    
+    private void jButton_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atrasActionPerformed
         // TODO add your handling code here:
         v2.setVisible(true); // Nos regresa atras a la pantalla V2
         this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButton_atrasActionPerformed
+
+    private void jButton_registrar_consumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_registrar_consumoActionPerformed
+        // TODO add your handling code here:
+        String idODni = jTextField_buscar_id_dni.getText().trim();
+        String consumoTexto = jTextField_consumo_mes.getText().trim();
+        Date fechaSeleccionada = jDateChooser_fecha_consumo.getDate();
+
+        if (idODni.isEmpty() || consumoTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            double consumoMensual = Double.parseDouble(consumoTexto);
+            if (consumoMensual <= 0) {
+                JOptionPane.showMessageDialog(this, "El consumo debe ser mayor a 0.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Validar si el ID o DNI corresponde a un usuario
+            ClienteLogica clienteLogica = new ClienteLogica();
+            int idUsuario = clienteLogica.obtenerIdUsuarioPorDniOId(idODni); // Este método se debe implementar
+            if (idUsuario == -1) {
+                JOptionPane.showMessageDialog(this, "No se encontró un usuario con el ID o DNI proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Usar la fecha seleccionada o la fecha actual
+            String fechaConsumo = (fechaSeleccionada != null) ?
+                    new SimpleDateFormat("yyyy-MM-dd").format(fechaSeleccionada) :
+                    new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+            // Registrar consumo
+            Consumo consumo = new Consumo();
+            consumo.setIdUsuario(idUsuario);
+            consumo.setMes(fechaConsumo); // Aquí tratamos el mes como fecha
+            consumo.setConsumoMensual(consumoMensual);
+
+            ConsumoLogica consumoLogica = new ConsumoLogica();
+            if (consumoLogica.registrarConsumo(consumo)) {
+                // Generar factura asociada
+                Factura factura = new Factura();
+                factura.setIdUsuario(idUsuario);
+                factura.setFechaEmision(fechaConsumo); // Fecha de consumo como emisión
+                factura.setFechaVencimiento(generarFechaVencimiento(fechaConsumo)); // Fecha de vencimiento +30 días
+                factura.setMonto(calcularMontoFactura(consumoMensual));
+                factura.setEstadoPago("Pendiente");
+
+                FacturaLogica facturaLogica = new FacturaLogica();
+                if (facturaLogica.generarFactura(factura)) {
+                    JOptionPane.showMessageDialog(this, "Consumo y factura registrados con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    cargarDatosTabla(idUsuario);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al generar la factura.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al registrar el consumo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor numérico válido para el consumo.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton_registrar_consumoActionPerformed
+
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        // Obtener el valor ingresado por el usuario
+        String idODni = jTextField_buscar_id_dni.getText().trim();
+
+        if (idODni.isEmpty()) {
+            // Si el campo está vacío, mostrar mensaje de advertencia
+            JOptionPane.showMessageDialog(this, "Ingrese un ID o DNI para buscar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Instanciar la lógica de clientes
+        ClienteLogica clienteLogica = new ClienteLogica();
+
+        // Obtener el ID del usuario con el método de búsqueda
+        int idUsuario = clienteLogica.obtenerIdUsuarioPorDniOId(idODni);
+
+        if (idUsuario == -1) {
+            // Si no se encuentra el usuario, mostrar un mensaje en el JLabel
+            jLabel_resultado_nombreCliente.setText("No se encontró un usuario con el ID o DNI proporcionado.");
+            cargarDatosTabla(-1); // Limpiar tabla en caso de búsqueda fallida
+        } else {
+            // Si se encuentra el usuario, mostrar el nombre del cliente
+            List<modelo.Cliente> clientes = clienteLogica.obtenerClientes();
+            for (modelo.Cliente cliente : clientes) {
+                if (cliente.getIdUsuario() == idUsuario) {
+                    jLabel_resultado_nombreCliente.setText("Cliente encontrado: " + cliente.getNombre());
+                    break;
+                }
+            }
+            // Cargar los datos del cliente en la tabla
+            cargarDatosTabla(idUsuario);
+        }
+    }//GEN-LAST:event_jButton_buscarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MedidorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MedidorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MedidorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MedidorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MedidorFrame().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_atras;
+    private javax.swing.JButton jButton_buscar;
+    private javax.swing.JButton jButton_registrar_consumo;
+    private com.toedter.calendar.JDateChooser jDateChooser_fecha_consumo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel_resultado_nombreCliente;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTable_consumo_factura_medidor;
+    private javax.swing.JTextField jTextField_buscar_id_dni;
+    private javax.swing.JTextField jTextField_consumo_mes;
     // End of variables declaration//GEN-END:variables
 }

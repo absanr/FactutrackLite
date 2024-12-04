@@ -4,10 +4,32 @@
  */
 package Logica;
 
+import DAO.ConsumoDAO;
+import modelo.Consumo;
+import java.util.List;
 /**
  *
- * @author DERICK ALEXIS
+ * @author Roger
  */
 public class ConsumoLogica {
-    
+    private ConsumoDAO consumoDAO;
+
+    public ConsumoLogica() {
+        this.consumoDAO = new ConsumoDAO();
+    }
+
+    public boolean registrarConsumo(Consumo consumo) {
+        if (consumo.getConsumoMensual() <= 0) {
+            return false; // Consumo inválido
+        }
+        return consumoDAO.insertarConsumo(consumo);
+    }
+
+    public List<Consumo> obtenerConsumosPorUsuario(int idUsuario) {
+        return consumoDAO.obtenerConsumosPorUsuario(idUsuario);
+    }
+
+    public boolean eliminarConsumo(int idConsumo) {
+        return consumoDAO.eliminarConsumo(idConsumo);
+    }
 }

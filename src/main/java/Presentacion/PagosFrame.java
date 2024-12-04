@@ -4,6 +4,13 @@
  */
 package Presentacion;
 
+import Logica.ClienteLogica;
+import Logica.FacturaLogica;
+import modelo.Factura;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 /**
  *
  * @author DERICK ALEXIS
@@ -12,9 +19,32 @@ public class PagosFrame extends javax.swing.JFrame {
 
    
     private Dashboard v2;
+
     public PagosFrame() {
         initComponents();
         this.setLocationRelativeTo(this);
+    }
+
+    public void setV2(Dashboard v2) {
+        this.v2 = v2;
+    }
+
+    private void cargarDatosTabla(int idUsuario) {
+        DefaultTableModel modelo = (DefaultTableModel) jTable_pagos.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        FacturaLogica facturaLogica = new FacturaLogica();
+        List<Factura> facturas = facturaLogica.obtenerFacturasPorUsuario(idUsuario);
+
+        for (Factura factura : facturas) {
+            modelo.addRow(new Object[]{
+                    factura.getIdFactura(),
+                    factura.getFechaEmision(),
+                    factura.getMonto(),
+                    factura.getEstadoPago(),
+                    factura.getStatus()
+            });
+        }
     }
 
     /**
@@ -29,15 +59,15 @@ public class PagosFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        jTextField_monto_a_pagar = new javax.swing.JTextField();
+        jButton_registrarPago = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jTable_pagos = new javax.swing.JTable();
+        jButton_buscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextField_buscar_id_dni = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jButton_atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,14 +76,13 @@ public class PagosFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Monto a pagar (soles)");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        jButton_registrarPago.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton_registrarPago.setText("Pagar");
+        jButton_registrarPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                jButton_registrarPagoActionPerformed(evt);
             }
         });
-
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setText("Pagar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -64,9 +93,9 @@ public class PagosFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField_monto_a_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton_registrarPago, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
         );
         jPanel1Layout.setVerticalGroup(
@@ -76,12 +105,12 @@ public class PagosFrame extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                    .addComponent(jTextField5))
+                    .addComponent(jButton_registrarPago, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(jTextField_monto_a_pagar))
                 .addGap(14, 14, 14))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_pagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -92,21 +121,26 @@ public class PagosFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable_pagos);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Buscar");
+        jButton_buscar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton_buscar.setText("Buscar");
+        jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_buscarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Buscar por idusuario o DNI:");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setText("Realizar Pagos");
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("Atras");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton_atras.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton_atras.setText("Atras");
+        jButton_atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton_atrasActionPerformed(evt);
             }
         });
 
@@ -118,9 +152,9 @@ public class PagosFrame extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_buscar_id_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(jButton_buscar)
                 .addGap(328, 328, 328))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,7 +170,7 @@ public class PagosFrame extends javax.swing.JFrame {
             .addComponent(jScrollPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
@@ -146,9 +180,9 @@ public class PagosFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
-                            .addComponent(jButton1)))
+                            .addComponent(jButton_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_buscar_id_dni, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -156,8 +190,8 @@ public class PagosFrame extends javax.swing.JFrame {
                             .addComponent(jLabel8))))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addComponent(jButton_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -165,65 +199,104 @@ public class PagosFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atrasActionPerformed
         // TODO add your handling code here:
         v2.setVisible(true); // Nos regresa atras a la pantalla V2
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
-        public  void setV2(Dashboard v2){
-        this.v2 = v2;
+    }//GEN-LAST:event_jButton_atrasActionPerformed
+
+    private void jButton_registrarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_registrarPagoActionPerformed
+        // TODO add your handling code here:
+        String idODni = jTextField_buscar_id_dni.getText().trim();
+        String montoTexto = jTextField_monto_a_pagar.getText().trim();
+
+        if (idODni.isEmpty() || montoTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor complete los campos obligatorios.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+
+        try {
+            double montoPagado = Double.parseDouble(montoTexto);
+
+            ClienteLogica clienteLogica = new ClienteLogica();
+            int idUsuario = clienteLogica.obtenerIdUsuarioPorDniOId(idODni);
+
+            if (idUsuario == -1) {
+                JOptionPane.showMessageDialog(this, "No se encontró un usuario con el ID o DNI proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            FacturaLogica facturaLogica = new FacturaLogica();
+            List<Factura> facturasPendientes = facturaLogica.obtenerFacturasPendientesPorUsuario(idUsuario);
+
+            if (facturasPendientes.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No hay facturas pendientes para este usuario.", "Información", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            Factura primeraFactura = facturasPendientes.get(0); // Seleccionar la primera factura pendiente
+
+            if (montoPagado >= primeraFactura.getMonto()) {
+                facturaLogica.pagarFactura(primeraFactura.getIdFactura());
+                JOptionPane.showMessageDialog(this, "Pago registrado con éxito. La factura ha sido pagada completamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                facturaLogica.actualizarEstadoPagoParcial(primeraFactura.getIdFactura(), montoPagado);
+                JOptionPane.showMessageDialog(this, "Pago parcial registrado. El monto restante será actualizado.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            cargarDatosTabla(idUsuario);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un valor numérico válido para el monto a pagar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton_registrarPagoActionPerformed
+
+    private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
+        // TODO add your handling code here:
+        String idODni = jTextField_buscar_id_dni.getText().trim();
+
+        if (idODni.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un ID o DNI para buscar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        ClienteLogica clienteLogica = new ClienteLogica();
+        int idUsuario = clienteLogica.obtenerIdUsuarioPorDniOId(idODni);
+
+        if (idUsuario == -1) {
+            JOptionPane.showMessageDialog(this, "No se encontró un usuario con el ID o DNI proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            cargarDatosTabla(idUsuario);
+
+            FacturaLogica facturaLogica = new FacturaLogica();
+            List<Factura> facturas = facturaLogica.obtenerFacturasPendientesPorUsuario(idUsuario);
+
+            if (!facturas.isEmpty()) {
+                Factura primeraFactura = facturas.get(0); // Seleccionamos la primera factura pendiente
+                jTextField_monto_a_pagar.setText(String.valueOf(primeraFactura.getMonto()));
+            } else {
+                jTextField_monto_a_pagar.setText("");
+                JOptionPane.showMessageDialog(this, "No hay facturas pendientes para este usuario.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton_buscarActionPerformed
+        
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PagosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PagosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PagosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PagosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PagosFrame().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton_atras;
+    private javax.swing.JButton jButton_buscar;
+    private javax.swing.JButton jButton_registrarPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable jTable_pagos;
+    private javax.swing.JTextField jTextField_buscar_id_dni;
+    private javax.swing.JTextField jTextField_monto_a_pagar;
     // End of variables declaration//GEN-END:variables
 }
