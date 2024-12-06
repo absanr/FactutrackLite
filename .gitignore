@@ -1,0 +1,36 @@
+# Archivos y directorios generados automáticamente
+/target/
+/bin/
+/build/
+/out/
+
+# Configuración de NetBeans
+/nbactions.xml
+/nb-configuration.xml
+
+# Configuración de IntelliJ IDEA
+/.idea/
+/*.iml
+
+# Configuración de Eclipse
+/.settings/
+/.classpath
+/.project
+
+# Archivos temporales del sistema operativo
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Archivos de Maven
+.mvn/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Archivos de bases de datos locales
+*.sql
+*.sqlite
+*.db
+
+# Otras carpetas específicas de XAMPP
+/xampp/

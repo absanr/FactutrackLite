@@ -1,0 +1,8 @@
+# Forzar LF para archivos de texto
+*.java text eol=lf
+*.form text eol=lf
+*.xml text eol=lf
+
+# Binarios (sin conversión)
+*.png binary
+*.jpg binary
