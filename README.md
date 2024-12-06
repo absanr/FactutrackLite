@@ -44,3 +44,20 @@ Permite registrar consumos de medidores de agua, Realizar un segumiento de deuda
  
 ![image](https://github.com/user-attachments/assets/b9a32c4e-570d-46b4-b542-6ad27423b7aa)
 
+
+## Contribución
+
+Si deseas contribuir a este proyecto, por favor sigue los siguientes pasos:
+
+1. Realiza un fork del repositorio.
+2. Crea una nueva rama para tus cambios.
+3. Realiza los cambios necesarios y realiza commits con mensajes claros.
+4. Envía un pull request describiendo tus cambios en detalle.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Para más detalles, consulta el archivo `LICENSE`.
+
+---
+
+**Desarrollado por [ABSANR](https://github.com/absanr/)**
