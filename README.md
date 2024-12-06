@@ -17,4 +17,30 @@ Permite registrar consumos de medidores de agua, Realizar un segumiento de deuda
 1. Clona el repositorio del proyecto.
 2. Abre el proyecto en tu IDE.
 3. Configura el entorno de ejecución asegurándote de que Java SDK 23 o superior esté instalado.
-4. Ejecuta la aplicación desde la clase principal `LoginForm` dentro del paquete Presentacion. 
+4. Ejecuta la aplicación desde la clase principal `LoginForm` dentro del paquete Presentacion.
+
+## Prototipos (Generado en NetBeans)
+6.1	Vista- Login
+ ![image](https://github.com/user-attachments/assets/86028fbb-715e-46a4-9681-8b2b152493d8)
+
+6.2	Vista-Dashboard  
+![image](https://github.com/user-attachments/assets/af1929db-c5b4-4f5f-9039-2e4e2cebf354)
+
+
+6.3	Vista- Registrar Nuevo Usuario (Cliente)
+ ![image](https://github.com/user-attachments/assets/fe753181-c034-4bb6-b4de-1f7fd8232976)
+
+6.4	Vista- Registrar Consumo de Medidores
+ 
+![image](https://github.com/user-attachments/assets/08545136-bbe8-4243-ab23-b9d0ef4a89ef)
+
+6.5	Vista- Lista de Deudores
+ ![image](https://github.com/user-attachments/assets/8fd7e5d9-a3e7-429e-88ba-1ebdb479fda2)
+
+6.6	Vista- Registrar pagos de Consumos de Medidores
+ ![image](https://github.com/user-attachments/assets/4e0bf9f4-4c34-4276-83b7-dc188805ebd7)
+
+6.7	Vista- Historial de Consumos junto a los montos. 
+ 
+![image](https://github.com/user-attachments/assets/b9a32c4e-570d-46b4-b542-6ad27423b7aa)
+
